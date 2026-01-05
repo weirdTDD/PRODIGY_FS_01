@@ -1,5 +1,4 @@
 
-import './App.css'
 import Login from './components/Login'
 import Home from './components/Home'
 import Register from './components/Register'
