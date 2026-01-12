@@ -1,4 +1,4 @@
-
+import React from "react";
 import Login from './components/Login'
 import Home from './components/Home'
 import Register from './components/Register'
@@ -6,7 +6,7 @@ import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import About from './components/About'
 
-function App() {
+export default function App() {
 
   const location = useLocation();
   const noNavbar = location.pathname === '/register' || location.pathname === '/'
@@ -42,4 +42,3 @@ function App() {
   )
 }
 
-export default App
