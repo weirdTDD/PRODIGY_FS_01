@@ -89,7 +89,7 @@ export default function Login () {
       const newErrors ={};
       if (formData.fullName.length < 2) newErrors.fullName ='Name must be at least two characters';
       if (!validateEmail(formData.email)) newErrors.email ='Please enter a valid email address';
-      if (formData.password.length <= 8) newErrors.password ='Password must be at least 8 characters';
+      if (formData.password.length < 8) newErrors.password ='Password must be at least 8 characters';
       if (formData.password !== formData.confirmPassword) newErrors.confirmPassword ='Passwords do not match';
 
       setErrors(newErrors);
