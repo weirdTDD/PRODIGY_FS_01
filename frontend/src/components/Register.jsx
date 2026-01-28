@@ -1,4 +1,4 @@
-import { Lock, LogIn, LucideEye, LucideEyeClosed, Mail, ShieldCheck, User2Icon, UserPlus } from 'lucide-react'
+import { Lock, LucideEye, LucideEyeClosed, Mail, ShieldCheck, User2Icon, UserPlus } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
 const InputField =({

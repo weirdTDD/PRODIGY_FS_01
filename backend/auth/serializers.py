@@ -28,4 +28,4 @@ def create(self, validated_data):
         username= validated_data["username"]
     ) 
     
-    return User
+    return user
