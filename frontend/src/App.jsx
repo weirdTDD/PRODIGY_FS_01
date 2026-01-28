@@ -9,14 +9,14 @@ import About from './components/About'
 export default function App() {
 
   const location = useLocation();
-  const noNavbar = location.pathname === '/register' || location.pathname === '/'
+  const noNavbar = location.pathname === '/register' || location.pathname==='/login';
   
 
   return (
     <>
       {noNavbar ? 
         <Routes>
-          <Route path = "/" element = {<Login/>}/>
+          <Route path = "/login" element = {<Login/>}/>
           <Route path = "/register" element={<Register/>}/>
         </Routes>
 

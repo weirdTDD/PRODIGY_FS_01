@@ -1,5 +1,7 @@
 import { Lock, LogIn, LucideEye, LucideEyeClosed, User2Icon } from 'lucide-react'
 import React, { useState } from 'react'
+import axiosInstance from './AxiosInstance'
+import { useNavigate } from 'react-router-dom'
 
 const InputField =({
   label,
@@ -60,19 +62,47 @@ const InputField =({
 
 export default function Login () {
 
+
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [IsLoading, setIsLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+  const handleLogin = async (e) => {
+  e.preventDefault();
+   setErrorMsg('')
+   setIsLoading(true)
+  
+  const loginData = {
+    email: email,
+    password: password
+  };
+  
+  try {
+    const response = await axiosInstance.post('/login', loginData);
+    
+    // Store tokens
+    localStorage.setItem('access_token', response.data.access);
+    localStorage.setItem('refresh_token', response.data.refresh);
+    localStorage.setItem('user', JSON.stringify(response.data.user));
+    
+    // Redirect to dashboard
+    navigate('/home');
+  } catch (error) {
+    // Handle login errors
+    const msg =
+    error?.response?.data?.detail ||
+    error?.response?.data?.message ||
+    'Login failed. Please try again.'
 
-    //API Call
-    setTimeout(() => {
-      console.log('Login attempt with:', { email, password });
-    }, 1500);
+    setErrorMsg(msg)
+    console.error('Login error:', error);
+  }finally {
+    setIsLoading(false)
   }
+};
 
 
   return (
@@ -90,7 +120,7 @@ export default function Login () {
             <p className='text-gray-600 mt-2'> Please enter your details to sign in</p>
           </div>
 
-          <form onSubmit={handleSubmit} className='px-8'>
+          <form onSubmit={handleLogin} className='px-8'>
             <InputField
               id="email"
               label="Email Address"
@@ -112,6 +142,12 @@ export default function Login () {
               icon={<Lock size={20}/>}
               showPasswordToggle
             />
+
+            {errorMsg ? (
+              <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3">
+                {errorMsg}
+              </div>
+            ) : null}
 
             <div className='flex items-center justify-between my-12'>
               <div className='flex items-center'>
