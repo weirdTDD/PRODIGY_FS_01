@@ -81,7 +81,7 @@ export default function Login () {
   };
   
   try {
-    const response = await axiosInstance.post('/login', loginData);
+    const response = await axiosInstance.post('/api/login/', loginData);
     
     // Store tokens
     localStorage.setItem('access_token', response.data.access);

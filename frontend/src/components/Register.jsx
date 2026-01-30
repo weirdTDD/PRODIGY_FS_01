@@ -134,7 +134,7 @@ export default function Register() {
     setIsLoading(true)
 
     try {
-      await axiosInstance.post('/register', registrationData)
+      await axiosInstance.post('/api/register/', registrationData)
 
       setSuccessMessage('Account created successfully! Redirecting to login...')
       setTimeout(() => navigate('/login'), 2000)
