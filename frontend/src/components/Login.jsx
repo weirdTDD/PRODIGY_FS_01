@@ -1,7 +1,7 @@
 import { Lock, LogIn, LucideEye, LucideEyeClosed, User2Icon } from 'lucide-react'
 import React, { useState } from 'react'
 import axiosInstance from './AxiosInstance'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const InputField =({
   label,
@@ -64,6 +64,8 @@ export default function Login () {
 
 
   const navigate = useNavigate()
+  const location = useLocation()
+  const redirectTo = location.state?.from?.pathname || '/home'
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -88,8 +90,8 @@ export default function Login () {
     localStorage.setItem('refresh_token', response.data.refresh);
     localStorage.setItem('user', JSON.stringify(response.data.user));
     
-    // Redirect to dashboard
-    navigate('/home');
+    // Redirect to original destination (or home)
+    navigate(redirectTo, { replace: true });
   } catch (error) {
     // Handle login errors
     const msg =

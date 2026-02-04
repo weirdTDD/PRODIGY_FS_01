@@ -22,6 +22,16 @@ export default function Navbar(props) {
     const {content} = (props);
     const location = useLocation();
     const path = location.pathname;
+    const userJson = localStorage.getItem('user')
+    const user = (() => {
+      if (!userJson) return null
+      try {
+        return JSON.parse(userJson)
+      } catch {
+        return null
+      }
+    })()
+    const isAdmin = user?.is_superuser === true
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -57,18 +67,20 @@ export default function Navbar(props) {
           </List>
 
           
-          <List>
-            
-            <ListItem key={2} disablePadding>
-                <ListItemButton component={Link} to= "/about" selected={"/about" === path}>
-                  <ListItemIcon>
-                    <InfoIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"About"} />
-                </ListItemButton>
-            </ListItem>
-            
-          </List>
+          {isAdmin ? (
+            <List>
+              
+              <ListItem key={2} disablePadding>
+                  <ListItemButton component={Link} to= "/about" selected={"/about" === path}>
+                    <ListItemIcon>
+                      <InfoIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"About"} />
+                  </ListItemButton>
+              </ListItem>
+              
+            </List>
+          ) : null}
           
           
         </Box>
